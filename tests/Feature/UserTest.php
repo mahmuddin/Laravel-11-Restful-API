@@ -107,4 +107,45 @@ class UserTest extends TestCase
                 ]
             ]);
     }
+
+    public function testGetSuccess()
+    {
+        $this->seed(UserSeeder::class);
+        $response = $this->get('/api/users/current', [
+            'Authorization' => 'test'
+        ]);
+        $response->assertStatus(200)
+            ->assertJson([
+                "data" => [
+                    'username' => 'test',
+                    'name' => 'Test',
+                ]
+            ]);
+    }
+
+    public function testGetUnauthorized()
+    {
+        $this->seed(UserSeeder::class);
+        $response = $this->get('/api/users/current');
+        $response->assertStatus(401)
+            ->assertJson([
+                "errors" => [
+                    'message' => ['Unauthorized']
+                ]
+            ]);
+    }
+
+    public function testGetInvalidToken()
+    {
+        $this->seed(UserSeeder::class);
+        $response = $this->get('/api/users/current', [
+            'Authorization' => 'salah'
+        ]);
+        $response->assertStatus(401)
+            ->assertJson([
+                "errors" => [
+                    'message' => ['Unauthorized']
+                ]
+            ]);
+    }
 }
