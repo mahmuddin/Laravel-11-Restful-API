@@ -10,12 +10,12 @@ class UserTest extends TestCase
 {
     public function testRegisterSuccess()
     {
-        $this->post('/api/users', [
+        $response = $this->post('/api/users', [
             'username' => 'john_doe',
             'password' => 'password',
             'name' => 'John Doe',
-        ])
-            ->assertStatus(201)
+        ]);
+        $response->assertStatus(201)
             ->assertJson([
                 "data" => [
                     'username' => 'john_doe',
@@ -26,23 +26,35 @@ class UserTest extends TestCase
 
     public function testRegisterFailed()
     {
-        $response = $this->post('/users', [
-            'name' => 'John Doe',
-            'email' => 'dQyv3@example.com',
-            'password' => 'password',
+        $response = $this->post('/api/users', [
+            'usename' => '',
+            'password' => '',
+            'name' => '',
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(400)
+            ->assertJson([
+                "errors" => [
+                    'username' => ['The username field is required.'],
+                    "password" => ['The password field is required.'],
+                    "name" => ['The name field is required.']
+                ]
+            ]);
     }
 
     public function testRegisterUsernameAlreadyExists()
     {
-        $response = $this->post('/users', [
-            'name' => 'John Doe',
-            'email' => 'dQyv3@example.com',
+        $this->testRegisterSuccess();
+        $response = $this->post('/api/users', [
+            'username' => 'john_doe',
             'password' => 'password',
+            'name' => 'John Doe',
         ]);
-
-        $response->assertStatus(200);
+        $response->assertStatus(400)
+            ->assertJson([
+                "errors" => [
+                    'username' => ['The username has already been taken.']
+                ]
+            ]);
     }
 }
