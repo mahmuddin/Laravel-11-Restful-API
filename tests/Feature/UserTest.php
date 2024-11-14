@@ -6,7 +6,9 @@ use App\Models\User;
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Log;
 
 class UserTest extends TestCase
 {
@@ -139,6 +141,93 @@ class UserTest extends TestCase
     {
         $this->seed(UserSeeder::class);
         $response = $this->get('/api/users/current', [
+            'Authorization' => 'salah'
+        ]);
+        $response->assertStatus(401)
+            ->assertJson([
+                "errors" => [
+                    'message' => ['Unauthorized']
+                ]
+            ]);
+    }
+
+    public function testUpdateNameSuccess()
+    {
+        $this->seed(UserSeeder::class);
+        $oldUser = User::where('username', 'test')->first();
+        $response = $this->patch('/api/users/current', [
+            'name' => 'baru',
+        ], [
+            'Authorization' => 'test'
+        ]);
+        $response->assertStatus(200)
+            ->assertJson([
+                "data" => [
+                    'username' => 'test',
+                    'name' => 'baru',
+                ]
+            ]);
+
+        $newUser = User::where('username', 'test')->first();
+        self::assertNotEquals($oldUser->name, $newUser->name);
+    }
+
+    public function testUpdatePasswordSuccess()
+    {
+        $this->seed(UserSeeder::class);
+        $oldUser = User::where('username', 'test')->first();
+        $response = $this->patch('/api/users/current', [
+            'password' => 'baru',
+        ], [
+            'Authorization' => 'test'
+        ]);
+        $response->assertStatus(200)
+            ->assertJson([
+                "data" => [
+                    'username' => 'test',
+                    'name' => 'Test',
+                ]
+            ]);
+
+        $newUser = User::where('username', 'test')->first();
+        self::assertNotEquals($oldUser->password, $newUser->password);
+    }
+
+    public function testUpdateFailed()
+    {
+        $this->seed(UserSeeder::class);
+        $response = $this->patch('/api/users/current', [
+            'name' => Str::random(101),
+        ], [
+            'Authorization' => 'test'
+        ]);
+        $response->assertStatus(400)
+            ->assertJson([
+                "errors" => [
+                    'name' => ['The name field must not be greater than 100 characters.']
+                ]
+            ]);
+    }
+
+    public function testLogoutSuccess()
+    {
+        $this->seed(UserSeeder::class);
+        $response = $this->delete('/api/users/logout',  [],  [
+            'Authorization' => 'test'
+        ]);
+        $response->assertStatus(200)
+            ->assertJson([
+                "data" => true
+            ]);
+
+        $user = User::where('username', 'test')->first();
+        self::assertNull($user->token);
+    }
+
+    public function testLogoutFailed()
+    {
+        $this->seed(UserSeeder::class);
+        $response = $this->delete('/api/users/logout', [], [
             'Authorization' => 'salah'
         ]);
         $response->assertStatus(401)
