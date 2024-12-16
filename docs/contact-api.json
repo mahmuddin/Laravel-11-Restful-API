@@ -54,7 +54,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Success create contacts",
                         "content": {
                             "application/json": {
@@ -67,7 +67,7 @@
                                                 "id": {
                                                     "type": "number"
                                                 },
-                                                "fist_name": {
+                                                "first_name": {
                                                     "type": "string"
                                                 },
                                                 "last_name": {
@@ -160,7 +160,7 @@
                                                     "id": {
                                                         "type": "number"
                                                     },
-                                                    "fist_name": {
+                                                    "first_name": {
                                                         "type": "string"
                                                     },
                                                     "last_name": {
@@ -263,7 +263,7 @@
                                                 "id": {
                                                     "type": "number"
                                                 },
-                                                "fist_name": {
+                                                "first_name": {
                                                     "type": "string"
                                                 },
                                                 "last_name": {
@@ -322,7 +322,7 @@
                                                 "id": {
                                                     "type": "number"
                                                 },
-                                                "fist_name": {
+                                                "first_name": {
                                                     "type": "string"
                                                 },
                                                 "last_name": {

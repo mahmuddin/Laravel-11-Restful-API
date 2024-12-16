@@ -32,7 +32,7 @@
                             "schema": {
                                 "type": "object",
                                 "required": [
-                                    "username",
+                                    "           ",
                                     "password",
                                     "name"
                                 ],

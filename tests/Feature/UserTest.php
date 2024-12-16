@@ -212,7 +212,7 @@ class UserTest extends TestCase
     public function testLogoutSuccess()
     {
         $this->seed(UserSeeder::class);
-        $response = $this->delete('/api/users/logout',  [],  [
+        $response = $this->delete(uri: '/api/users/logout', headers: [
             'Authorization' => 'test'
         ]);
         $response->assertStatus(200)
@@ -227,7 +227,7 @@ class UserTest extends TestCase
     public function testLogoutFailed()
     {
         $this->seed(UserSeeder::class);
-        $response = $this->delete('/api/users/logout', [], [
+        $response = $this->delete(uri: '/api/users/logout', headers: [
             'Authorization' => 'salah'
         ]);
         $response->assertStatus(401)
