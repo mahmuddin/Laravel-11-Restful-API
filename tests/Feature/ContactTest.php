@@ -255,7 +255,7 @@ class ContactTest extends TestCase
 
         // Assert values
         self::assertEquals(10, count($responseData['data']));
-        self::assertEquals(20, $responseData['pagination']['total']);
+        self::assertEquals(20, $responseData['meta']['total']);
     }
     public function testSearchByEmail()
     {
@@ -278,7 +278,7 @@ class ContactTest extends TestCase
 
         // Assert values
         self::assertEquals(10, count($responseData['data']));
-        self::assertEquals(20, $responseData['pagination']['total']);
+        self::assertEquals(20, $responseData['meta']['total']);
     }
     public function testSearchByPhone()
     {
@@ -301,7 +301,7 @@ class ContactTest extends TestCase
 
         // Assert values
         self::assertEquals(10, count($responseData['data']));
-        self::assertEquals(20, $responseData['pagination']['total']);
+        self::assertEquals(20, $responseData['meta']['total']);
     }
 
     public function testSearchNotFound()
@@ -325,7 +325,7 @@ class ContactTest extends TestCase
 
         // Assert values
         self::assertEquals(0, count($responseData['data']));
-        self::assertEquals(0, $responseData['pagination']['total']);
+        self::assertEquals(0, $responseData['meta']['total']);
     }
     public function testSearchWithPage()
     {
@@ -348,7 +348,7 @@ class ContactTest extends TestCase
 
         // Assert values
         self::assertEquals(5, count($responseData['data']));
-        self::assertEquals(20, $responseData['pagination']['total']);
-        self::assertEquals(2, $responseData['pagination']['current_page']);
+        self::assertEquals(20, $responseData['meta']['total']);
+        self::assertEquals(2, $responseData['meta']['current_page']);
     }
 }

@@ -74,6 +74,9 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
+                                    "required": [
+                                        "country"
+                                    ],
                                     "properties": {
                                         "data": {
                                             "type": "object",
@@ -112,6 +115,14 @@
                 "summary": "Get list addresses",
                 "description": "Get list addresses",
                 "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
                     {
                         "name": "idContact",
                         "in": "path",
@@ -171,6 +182,14 @@
                 "summary": "Get address",
                 "description": "Get address",
                 "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
                     {
                         "name": "idContact",
                         "in": "path",
@@ -233,6 +252,14 @@
                 "summary": "Update address",
                 "description": "Update address",
                 "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
                     {
                         "name": "idContact",
                         "in": "path",
